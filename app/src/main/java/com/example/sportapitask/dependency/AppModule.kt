@@ -2,11 +2,15 @@ package com.example.sportapitask.dependency
 
 import android.content.Context
 import com.example.sportapitask.base.BaseApp
+import com.example.sportapitask.data.models.NetworkFeedModel
+import com.example.sportapitask.data.models.domain.FeedModel
 import com.example.sportapitask.data.network.ApiaryDataSource
 import com.example.sportapitask.data.network.ApiaryDataSourceImpl
 import com.example.sportapitask.data.network.services.ApiaryService
 import com.example.sportapitask.data.repositories.ApiaryRepo
 import com.example.sportapitask.data.repositories.ApiaryRepoImpl
+import com.example.sportapitask.internal.ListMapper
+import com.example.sportapitask.internal.Mapper
 import com.example.sportapitask.utils.MyConsts
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
@@ -17,6 +21,7 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
+
     @Singleton
     @Provides
     fun provideContext(application: BaseApp): Context {

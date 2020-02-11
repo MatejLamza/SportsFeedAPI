@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sportapitask.data.models.NetworkFeedModel
+import com.example.sportapitask.data.models.domain.FeedModel
 import com.example.sportapitask.data.repositories.ApiaryRepo
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -13,12 +14,12 @@ import javax.inject.Inject
 class FeedViewModel
 @Inject constructor(val apiaryRepo: ApiaryRepo):ViewModel() {
 
-    var liveFeed = MutableLiveData<List<NetworkFeedModel>>()
+    var liveFeed = MutableLiveData<List<FeedModel>>()
 
     fun getFeed(){
         viewModelScope.launch {
             try {
-                liveFeed.value = apiaryRepo.fetchFeed().value
+                liveFeed.value = apiaryRepo.fetchFeed()
             } catch (exception:Exception){
                 Timber.d("FeedVM getFeed: ${exception.message}")
             }

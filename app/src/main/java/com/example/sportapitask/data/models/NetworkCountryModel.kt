@@ -1,11 +1,12 @@
 package com.example.sportapitask.data.models
 
-
 import com.google.gson.annotations.SerializedName
 
-data class Country(
+data class NetworkCountryModel(
+    @SerializedName("icon")
     var icon: String,
+    @SerializedName("id")
     var id: Int,
-    var name: String,
-    var slug: String
+    @SerializedName("name")
+    var name: String
 )

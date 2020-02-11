@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportapitask.R
 import com.example.sportapitask.data.models.NetworkFeedModel
+import com.example.sportapitask.data.models.domain.FeedModel
 import com.example.sportapitask.view.adapters.FeedAdapter
 import com.example.sportapitask.viewmodels.FeedViewModel
 import com.example.sportapitask.viewmodels.factory.FeedVMFactory
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var factory: FeedVMFactory
 
-    private var feed: ArrayList<NetworkFeedModel> = arrayListOf()
+    private var feed: ArrayList<FeedModel> = arrayListOf()
 
     private lateinit var feedVM: FeedViewModel
     private lateinit var recyclerView: RecyclerView
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         feedVM.getFeed()
 
         feedVM.liveFeed.observe(this, Observer {
-            feed = it as ArrayList<NetworkFeedModel>
+            feed = it as ArrayList<FeedModel>
             adapter.loadFeed(feed)
             adapter.notifyDataSetChanged()
         })

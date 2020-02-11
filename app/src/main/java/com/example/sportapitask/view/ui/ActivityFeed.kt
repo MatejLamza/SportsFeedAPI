@@ -36,11 +36,6 @@ class ActivityFeed:AppCompatActivity() {
 
         feedVM.getFeed()
 
-        feedVM.liveFeed.observe(this, Observer {
-            feed = it as ArrayList<NetworkFeedModel>
-            adapter.loadFeed(feed)
-            adapter.notifyDataSetChanged()
-        })
     }
 
     private fun initRecyclerView() {

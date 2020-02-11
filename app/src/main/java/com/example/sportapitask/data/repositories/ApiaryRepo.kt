@@ -1,10 +1,10 @@
 package com.example.sportapitask.data.repositories
 
-import androidx.lifecycle.LiveData
-import com.example.sportapitask.data.models.NetworkFeedModel
+
+import com.example.sportapitask.data.models.domain.FeedModel
 
 interface ApiaryRepo {
+
     //Network
-    //TODO Change to domain model
-    suspend fun fetchFeed(): LiveData<List<NetworkFeedModel>>
+    suspend fun fetchFeed(): List<FeedModel>
 }

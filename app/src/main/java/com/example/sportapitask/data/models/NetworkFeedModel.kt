@@ -4,16 +4,14 @@ package com.example.sportapitask.data.models
 import com.google.gson.annotations.SerializedName
 
 data class NetworkFeedModel(
-    var athlete: Athlete,
-    var author: Author,
-    var bookmarked: Boolean,
-    var createdAt: String,
-    var createdBefore: String,
+    @SerializedName("athlete")
+    var athlete: NetworkAthleteModel,
+    @SerializedName("description")
     var description: String,
-    @SerializedName("description `# #leomessi #pepe #neymar #sergioramos #championsleague`")
-    var descriptionLeomessiPepeNeymarSergioramosChampionsleague: String,
+    @SerializedName("id")
     var id: Int,
-    var sportGroup: SportGroup,
-    var video: Video,
+    @SerializedName("video")
+    var video: NetworkVideoModel,
+    @SerializedName("views")
     var views: String
 )
