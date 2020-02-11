@@ -6,5 +6,5 @@ import com.example.sportapitask.data.models.NetworkFeedModel
 interface ApiaryRepo {
     //Network
     //TODO Change to domain model
-    suspend fun fetchFeed(): LiveData<NetworkFeedModel>
+    suspend fun fetchFeed(): LiveData<List<NetworkFeedModel>>
 }

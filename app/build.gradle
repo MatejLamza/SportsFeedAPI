@@ -13,6 +13,8 @@ project.ext {
     timberVersion = "4.7.1"
     glideVersion = "4.11.0"
     leakcanaryVersion = "2.1"
+    androidMaterial = "1.1.0"
+    circularImageVersion = "3.2.0"
 }
 
 android {
@@ -45,8 +47,13 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
+    implementation "com.google.android.material:material:$androidMaterial"
+
     //Recycler View
     implementation "androidx.recyclerview:recyclerview:1.1.0"
+
+    //Circular image view
+    implementation "com.mikhaellopez:circularimageview:$circularImageVersion"
 
     //Glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"

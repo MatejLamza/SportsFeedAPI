@@ -10,5 +10,5 @@ interface ApiaryService {
     // into fetchFeed function as result would be the same. In real case scenario function would require as much
     // arguments as needed and they would be map to @Get annotation with @Path or  @Query inside function arugment block
     @GET("/feed")
-    fun getFeed():Deferred<NetworkFeedModel>
+    fun getFeed():Deferred<List<NetworkFeedModel>>
 }

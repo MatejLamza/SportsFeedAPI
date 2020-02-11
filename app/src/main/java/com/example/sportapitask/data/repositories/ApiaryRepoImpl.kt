@@ -11,7 +11,7 @@ class ApiaryRepoImpl
     @Inject constructor(val apiaryDS:ApiaryDataSource):ApiaryRepo {
 
     //TODO MAPPER
-    override suspend fun fetchFeed(): LiveData<NetworkFeedModel> {
+    override suspend fun fetchFeed(): LiveData<List<NetworkFeedModel>> {
         return withContext(Dispatchers.IO){
             apiaryDS.fetchFeed()
             return@withContext apiaryDS.fetchedFeed

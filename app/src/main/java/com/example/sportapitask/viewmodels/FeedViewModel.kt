@@ -13,7 +13,7 @@ import javax.inject.Inject
 class FeedViewModel
 @Inject constructor(val apiaryRepo: ApiaryRepo):ViewModel() {
 
-    var liveFeed = MutableLiveData<NetworkFeedModel>()
+    var liveFeed = MutableLiveData<List<NetworkFeedModel>>()
 
     fun getFeed(){
         viewModelScope.launch {

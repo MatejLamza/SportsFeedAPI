@@ -11,15 +11,14 @@ import javax.inject.Inject
 class ApiaryDataSourceImpl
 @Inject constructor(val apiaryService: ApiaryService):ApiaryDataSource {
 
-    private var _fetchedFeed = MutableLiveData<NetworkFeedModel>()
+    private var _fetchedFeed = MutableLiveData<List<NetworkFeedModel>>()
 
-    override val fetchedFeed: LiveData<NetworkFeedModel>
+    override val fetchedFeed: LiveData<List<NetworkFeedModel>>
         get() = _fetchedFeed
 
     override suspend fun fetchFeed() {
         try {
             val fetchedFeed = apiaryService.getFeed().await()
-            //TODO ovdje ne dodje uopce null je
             _fetchedFeed.postValue(fetchedFeed)
         } catch (exception:Exception){
             Timber.d("ApiaryDSImpl fetchFeed exception: ${exception.message}")
