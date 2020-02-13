@@ -1,7 +1,10 @@
 package com.example.sportapitask.dependency
 
 import android.content.Context
+import androidx.room.Room
 import com.example.sportapitask.base.BaseApp
+import com.example.sportapitask.data.database.ApiaryDAO
+import com.example.sportapitask.data.database.ApiaryDatabase
 import com.example.sportapitask.data.models.NetworkFeedModel
 import com.example.sportapitask.data.models.domain.FeedModel
 import com.example.sportapitask.data.network.ApiaryDataSource
@@ -49,5 +52,21 @@ class AppModule {
     @Provides
     fun provideApiaryRepo(apiaryRepoImpl: ApiaryRepoImpl):ApiaryRepo{
         return apiaryRepoImpl
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiaryDB(context: Context):ApiaryDatabase{
+        return Room.databaseBuilder(
+            context,
+            ApiaryDatabase::class.java,
+            MyConsts.DATABASE_NAME
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiaryDAO(db:ApiaryDatabase):ApiaryDAO{
+        return db.getApiaryDAO()
     }
 }

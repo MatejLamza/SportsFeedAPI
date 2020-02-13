@@ -5,14 +5,16 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportapitask.R
-import com.example.sportapitask.data.models.NetworkFeedModel
 import com.example.sportapitask.data.models.domain.FeedModel
 import com.example.sportapitask.view.adapters.FeedAdapter
+import com.example.sportapitask.view.ui.fragments.FragmentAthlete
+import com.example.sportapitask.view.ui.fragments.FragmentFeed
 import com.example.sportapitask.viewmodels.FeedViewModel
 import com.example.sportapitask.viewmodels.factory.FeedVMFactory
 import dagger.android.AndroidInjection
@@ -22,22 +24,12 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mDrawerLayout:DrawerLayout
-
-    @Inject
-    lateinit var factory: FeedVMFactory
-
-    private var feed: ArrayList<FeedModel> = arrayListOf()
-
-    private lateinit var feedVM: FeedViewModel
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var manager: LinearLayoutManager
-    private lateinit var adapter: FeedAdapter
+    private var fragmentAthlete = FragmentAthlete()
+    private var fragmentFeed = FragmentFeed()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initRecyclerView()
 
         mDrawerLayout = findViewById(R.id.drawer_home)
         setSupportActionBar(toolbar)
@@ -47,15 +39,25 @@ class MainActivity : AppCompatActivity() {
             setHomeAsUpIndicator(R.drawable.ic_menu)
         }
 
-        feedVM = ViewModelProvider(this,factory).get(FeedViewModel::class.java)
 
-        feedVM.getFeed()
 
-        feedVM.liveFeed.observe(this, Observer {
-            feed = it as ArrayList<FeedModel>
-            adapter.loadFeed(feed)
-            adapter.notifyDataSetChanged()
-        })
+        handleMenuClicks()
+        goToFragment(fragmentFeed)
+    }
+
+    private fun handleMenuClicks(){
+        nav_view.setNavigationItemSelectedListener { menuItem ->
+            menuItem.isChecked = true
+            mDrawerLayout.closeDrawers()
+            when(menuItem.itemId){
+                R.id.nav_athletes -> { goToFragment(fragmentAthlete) }
+                R.id.nav_feed ->{goToFragment(fragmentFeed) }
+                R.id.nav_sports -> { }
+                R.id.nav_profile -> { }
+                R.id.nav_settings -> { }
+            }
+            true
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -68,14 +70,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initRecyclerView() {
-        recyclerView = findViewById(R.id.rec_feed)
-        recyclerView.setHasFixedSize(true)
-
-        manager = LinearLayoutManager(this)
-        adapter = FeedAdapter()
-
-        recyclerView.layoutManager = manager
-        recyclerView.adapter = adapter
+    private fun goToFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.home_container,fragment)
+            addToBackStack(null)
+        }.commit()
     }
 }

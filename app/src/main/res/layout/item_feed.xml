@@ -9,6 +9,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:scaleType="fitXY"
             android:background="@color/colorPrimary"
             android:id="@+id/iv_item_background"
             android:layout_width="match_parent"
@@ -23,5 +24,48 @@
             android:layout_width="300dp"
             android:layout_height="50dp"/>
 
+        <View
+            android:id="@+id/separator_item_feed"
+            android:background="@color/white"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tv_item_headline"
+            android:layout_width="370dp"
+            android:layout_height="2dp"/>
+
+        <TextView
+            android:id="@+id/item_feed_sport"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/white"
+            android:text="@string/sport_placeholder_feed"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@id/separator_item_feed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/item_feed_share"
+            android:text="@string/share"
+            android:layout_below="@id/separator_item_feed"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/item_feed_views"
+            android:layout_marginTop="5dp"
+            android:text="@string/views_placeholder"
+            android:textColor="@color/white"
+            android:layout_below="@id/separator_item_feed"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 </LinearLayout>

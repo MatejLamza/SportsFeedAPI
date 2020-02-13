@@ -14,8 +14,14 @@ class FeedAdapter:RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
 
     private var _feed:ArrayList<FeedModel> = arrayListOf()
 
+    private lateinit var _listener:OnFeedClickListener
+
     fun loadFeed(feed:ArrayList<FeedModel>){
         _feed = feed
+    }
+
+    fun setOnFeedClickListener(listener:OnFeedClickListener){
+        _listener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder =
@@ -30,7 +36,16 @@ class FeedAdapter:RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
             .with(holder.itemView.context)
             .load(holder.feedModel!!.video.poster)
             .into(holder.itemView.iv_item_background)
+
+        holder.itemView.item_feed_share.setOnClickListener {
+            _listener.onShareFeedClicked(_feed[position])
+        }
+
+        holder.itemView.item_feed_container.setOnClickListener {
+            _listener.onFeedClicked(_feed[position])
+        }
     }
+
 
     class FeedViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         var feedModel: FeedModel? = null
@@ -39,5 +54,10 @@ class FeedAdapter:RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
 
             itemView.tv_item_headline.text = feedModel!!.description
         }
+    }
+
+    interface OnFeedClickListener{
+        fun onShareFeedClicked(feed:FeedModel)
+        fun onFeedClicked(feed: FeedModel)
     }
 }

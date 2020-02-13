@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/dark_grey"
+    android:layout_margin="15dp"
     app:cardCornerRadius="12dp"
     android:layout_width="180dp"
     android:layout_height="300dp">
@@ -32,7 +33,7 @@
         <TextView
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:text="@string/country_placeholder"
+            android:text="@string/country"
             android:textColor="@color/white"
             android:layout_below="@id/tv_item_athlete_name"
             android:layout_width="wrap_content"
@@ -43,7 +44,7 @@
             android:textColor="@color/white"
             android:layout_marginStart="70dp"
             android:layout_marginTop="20dp"
-            android:text="Croatia"
+            android:text="@string/country_placeholder"
             android:layout_below="@id/tv_item_athlete_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
