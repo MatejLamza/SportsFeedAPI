@@ -29,19 +29,11 @@ class VideoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFullScreen()
         setContentView(R.layout.activity_video)
         hideActionBar()
-
-
         getDataFromBundle()
         initPlayer()
-
-
-//        video_view.setVideoPath(video.url)
-//        video_view.start()
     }
-
 
     private fun getDataFromBundle() {
         if (intent.hasExtra(MyConsts.EXTRA_VIDEO_MODEL)) {
@@ -51,11 +43,6 @@ class VideoActivity : AppCompatActivity() {
 
     private fun hideActionBar(){
         supportActionBar?.hide()
-    }
-
-    private fun setFullScreen(){
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     private fun initPlayer() {

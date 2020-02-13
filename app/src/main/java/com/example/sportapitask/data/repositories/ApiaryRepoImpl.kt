@@ -1,6 +1,5 @@
 package com.example.sportapitask.data.repositories
 
-import android.util.Log
 import com.example.sportapitask.data.database.ApiaryDAO
 import com.example.sportapitask.data.models.*
 import com.example.sportapitask.data.models.domain.*
@@ -16,7 +15,6 @@ class ApiaryRepoImpl
 
     override suspend fun upsertFeed(feedModel: List<FeedModel>) {
         GlobalScope.launch(Dispatchers.IO) {
-            Log.d("aaa","Upsertam feed ${feedModel[0].description}")
             apiaryDAO.upsertFeed(feedModel)
         }
     }
@@ -29,17 +27,13 @@ class ApiaryRepoImpl
 
     override suspend fun fetchAthlete(): AthleteModel {
         return withContext(Dispatchers.IO) {
-            apiaryDS.fetchAthlete()
-            return@withContext mapNetworkAthleteToAthleteModel(apiaryDS.fetchedAthlete.value!!)
+            return@withContext mapNetworkAthleteToAthleteModel(apiaryDS.fetchAthlete())
         }
     }
 
     override suspend fun fetchFeed(): List<FeedModel> {
         return withContext(Dispatchers.IO) {
-            apiaryDS.fetchFeed()
-            val mappedList = mapListNetworkFeedToListFeedModel(apiaryDS.fetchedFeed.value!!)
-            upsertFeed(mappedList)
-            return@withContext mappedList
+            return@withContext mapListNetworkFeedToListFeedModel(apiaryDS.fetchFeed())
         }
     }
 

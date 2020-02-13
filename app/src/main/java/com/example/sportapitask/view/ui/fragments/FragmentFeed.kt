@@ -2,22 +2,18 @@ package com.example.sportapitask.view.ui.fragments
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.sportapitask.R
-import com.example.sportapitask.data.models.NetworkFeedModel
 import com.example.sportapitask.data.models.domain.FeedModel
-import com.example.sportapitask.data.models.domain.VideoModel
 import com.example.sportapitask.internal.AutoClearedValue
 import com.example.sportapitask.utils.MyConsts
 import com.example.sportapitask.view.adapters.FeedAdapter
@@ -25,8 +21,6 @@ import com.example.sportapitask.view.ui.VideoActivity
 import com.example.sportapitask.viewmodels.FeedViewModel
 import com.example.sportapitask.viewmodels.factory.FeedVMFactory
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.activity_feed.*
-import kotlinx.android.synthetic.main.item_feed.*
 import javax.inject.Inject
 
 class FragmentFeed : Fragment(), FeedAdapter.OnFeedClickListener {
@@ -48,7 +42,7 @@ class FragmentFeed : Fragment(), FeedAdapter.OnFeedClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_feed, container, false)
+        val view = inflater.inflate(R.layout.fragment_feed, container, false)
         initRecyclerView(view)
 
         feedVM = ViewModelProvider(this, factory).get(FeedViewModel::class.java)
@@ -80,9 +74,9 @@ class FragmentFeed : Fragment(), FeedAdapter.OnFeedClickListener {
     }
 
     private fun initRecyclerView(view: View) {
-        var recyclerView = view.findViewById(R.id.rec_feed) as RecyclerView
+        val recyclerView = view.findViewById(R.id.rec_feed) as RecyclerView
         recyclerView.setHasFixedSize(true)
-        var manager = LinearLayoutManager(activity!!.applicationContext)
+        val manager = LinearLayoutManager(activity!!.applicationContext)
         adapter = FeedAdapter()
         adapter.setOnFeedClickListener(this)
         recyclerView.layoutManager = manager

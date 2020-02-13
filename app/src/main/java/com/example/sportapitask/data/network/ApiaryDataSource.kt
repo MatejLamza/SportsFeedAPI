@@ -6,9 +6,6 @@ import com.example.sportapitask.data.models.NetworkFeedModel
 import com.example.sportapitask.data.models.domain.AthleteModel
 
 interface ApiaryDataSource {
-    val fetchedFeed:LiveData<List<NetworkFeedModel>>
-    val fetchedAthlete:LiveData<NetworkAthleteModel>
-
-    suspend fun fetchFeed()
-    suspend fun fetchAthlete()
+    suspend fun fetchFeed():List<NetworkFeedModel>
+    suspend fun fetchAthlete():NetworkAthleteModel
 }
