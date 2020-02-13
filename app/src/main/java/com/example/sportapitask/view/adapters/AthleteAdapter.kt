@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sportapitask.R
 import com.example.sportapitask.data.models.domain.AthleteModel
+import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_athlete.view.*
 
 class AthleteAdapter: RecyclerView.Adapter<AthleteAdapter.AthleteViewHolder>() {
@@ -30,7 +31,7 @@ class AthleteAdapter: RecyclerView.Adapter<AthleteAdapter.AthleteViewHolder>() {
             .into(holder.itemView.item_athlete_icon)
     }
 
-    class AthleteViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    class AthleteViewHolder(override val containerView: View?):RecyclerView.ViewHolder(containerView!!),LayoutContainer{
         var athleteModel:AthleteModel? = null
         set(value) {
             field = value

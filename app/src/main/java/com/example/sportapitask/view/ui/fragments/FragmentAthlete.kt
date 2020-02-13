@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sportapitask.R
 import com.example.sportapitask.data.models.domain.AthleteModel
+import com.example.sportapitask.internal.AutoClearedValue
 import com.example.sportapitask.view.adapters.AthleteAdapter
 import com.example.sportapitask.viewmodels.AthleteViewModel
 import com.example.sportapitask.viewmodels.factory.AthleteVMFactory
@@ -23,23 +24,15 @@ class FragmentAthlete : Fragment() {
 
     @Inject
     lateinit var factory: AthleteVMFactory
-
     private var athletes: ArrayList<AthleteModel> = arrayListOf()
-
     private lateinit var athleteVM: AthleteViewModel
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var manager: GridLayoutManager
-    private lateinit var adapter: AthleteAdapter
+
+    //This will ensure that we dont have to call onDestroy and clean recycler view adapter
+    private var adapter by AutoClearedValue<AthleteAdapter>()
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
-    }
-
-    //
-    override fun onDestroy() {
-        recyclerView.adapter = null
-        super.onDestroy()
     }
 
     override fun onCreateView(
@@ -63,20 +56,20 @@ class FragmentAthlete : Fragment() {
         return view
     }
 
-    private fun initTestData(){
-        val athlete = AthleteModel(23,null,"Test Club",null,"Test Name",null)
-        val athlete2 = AthleteModel(23,null,"Test Club",null,"Test Name",null)
-        val athlete3 = AthleteModel(23,null,"Test Club",null,"Test Name",null)
+    //Test data just to display list of athletes because API is not fetching athletes insted it can just fetch one
+    private fun initTestData() {
+        val athlete = AthleteModel(23, null, "Test Club", null, "Test Name", null)
+        val athlete2 = AthleteModel(23, null, "Test Club", null, "Test Name", null)
+        val athlete3 = AthleteModel(23, null, "Test Club", null, "Test Name", null)
         athletes.add(athlete)
         athletes.add(athlete2)
         athletes.add(athlete3)
     }
 
     private fun initRecyclerView(view: View) {
-        recyclerView = view.findViewById(R.id.rec_athletes)
+        val recyclerView = view.findViewById(R.id.rec_athletes) as RecyclerView
         recyclerView.setHasFixedSize(true)
-
-        manager = GridLayoutManager(view.context,2)
+        val manager = GridLayoutManager(view.context, 2)
         adapter = AthleteAdapter()
         recyclerView.layoutManager = manager
         recyclerView.adapter = adapter

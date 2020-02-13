@@ -8,6 +8,8 @@ import com.bumptech.glide.Glide
 import com.example.sportapitask.R
 import com.example.sportapitask.data.models.NetworkFeedModel
 import com.example.sportapitask.data.models.domain.FeedModel
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_feed.*
 import kotlinx.android.synthetic.main.item_feed.view.*
 
 class FeedAdapter:RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
@@ -47,12 +49,11 @@ class FeedAdapter:RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
     }
 
 
-    class FeedViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
+    class FeedViewHolder(override val containerView: View?):RecyclerView.ViewHolder(containerView!!),LayoutContainer{
         var feedModel: FeedModel? = null
         set(value) {
             field = value
-
-            itemView.tv_item_headline.text = feedModel!!.description
+            tv_item_headline.text = feedModel!!.description
         }
     }
 

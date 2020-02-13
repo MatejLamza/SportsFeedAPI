@@ -18,6 +18,7 @@ import com.example.sportapitask.R
 import com.example.sportapitask.data.models.NetworkFeedModel
 import com.example.sportapitask.data.models.domain.FeedModel
 import com.example.sportapitask.data.models.domain.VideoModel
+import com.example.sportapitask.internal.AutoClearedValue
 import com.example.sportapitask.utils.MyConsts
 import com.example.sportapitask.view.adapters.FeedAdapter
 import com.example.sportapitask.view.ui.VideoActivity
@@ -28,32 +29,29 @@ import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.android.synthetic.main.item_feed.*
 import javax.inject.Inject
 
-class FragmentFeed:Fragment(),FeedAdapter.OnFeedClickListener {
+class FragmentFeed : Fragment(), FeedAdapter.OnFeedClickListener {
     @Inject
     lateinit var factory: FeedVMFactory
 
     private var feed: ArrayList<FeedModel> = arrayListOf()
 
     private lateinit var feedVM: FeedViewModel
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var manager: LinearLayoutManager
-    private lateinit var adapter: FeedAdapter
+    private var adapter by AutoClearedValue<FeedAdapter>()
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 
-    override fun onDestroy() {
-        recyclerView.adapter = null
-        super.onDestroy()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.activity_feed,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.activity_feed, container, false)
         initRecyclerView(view)
 
-        feedVM = ViewModelProvider(this,factory).get(FeedViewModel::class.java)
+        feedVM = ViewModelProvider(this, factory).get(FeedViewModel::class.java)
         feedVM.getFeed()
 
         feedVM.liveFeed.observe(viewLifecycleOwner, Observer {
@@ -65,8 +63,8 @@ class FragmentFeed:Fragment(),FeedAdapter.OnFeedClickListener {
     }
 
     override fun onFeedClicked(feed: FeedModel) {
-        val intent = Intent(activity?.applicationContext,VideoActivity::class.java)
-        intent.putExtra(MyConsts.EXTRA_VIDEO_MODEL,feed.video)
+        val intent = Intent(activity?.applicationContext, VideoActivity::class.java)
+        intent.putExtra(MyConsts.EXTRA_VIDEO_MODEL, feed.video)
         startActivity(intent)
     }
 
@@ -74,7 +72,7 @@ class FragmentFeed:Fragment(),FeedAdapter.OnFeedClickListener {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, feed.video.url)
-            putExtra(Intent.EXTRA_TITLE,"My Awesome Clip")
+            putExtra(Intent.EXTRA_TITLE, "My Awesome Clip")
             type = "text/plain"
         }
         val shareIntent = Intent.createChooser(sendIntent, null)
@@ -82,9 +80,9 @@ class FragmentFeed:Fragment(),FeedAdapter.OnFeedClickListener {
     }
 
     private fun initRecyclerView(view: View) {
-        recyclerView = view.findViewById(R.id.rec_feed)
+        var recyclerView = view.findViewById(R.id.rec_feed) as RecyclerView
         recyclerView.setHasFixedSize(true)
-        manager = LinearLayoutManager(activity!!.applicationContext)
+        var manager = LinearLayoutManager(activity!!.applicationContext)
         adapter = FeedAdapter()
         adapter.setOnFeedClickListener(this)
         recyclerView.layoutManager = manager

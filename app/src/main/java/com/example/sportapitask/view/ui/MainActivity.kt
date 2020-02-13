@@ -6,20 +6,10 @@ import android.view.MenuItem
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.sportapitask.R
-import com.example.sportapitask.data.models.domain.FeedModel
-import com.example.sportapitask.view.adapters.FeedAdapter
 import com.example.sportapitask.view.ui.fragments.FragmentAthlete
 import com.example.sportapitask.view.ui.fragments.FragmentFeed
-import com.example.sportapitask.viewmodels.FeedViewModel
-import com.example.sportapitask.viewmodels.factory.FeedVMFactory
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,8 +28,6 @@ class MainActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_menu)
         }
-
-
 
         handleMenuClicks()
         goToFragment(fragmentFeed)
