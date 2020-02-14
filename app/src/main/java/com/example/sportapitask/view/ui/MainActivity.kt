@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             setHomeAsUpIndicator(R.drawable.ic_menu)
         }
 
+        goToFragment(fragmentFeed)
         handleMenuClicks()
     }
 
