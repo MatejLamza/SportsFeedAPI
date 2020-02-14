@@ -26,6 +26,12 @@ class AthleteAdapter: RecyclerView.Adapter<AthleteAdapter.AthleteViewHolder>() {
     override fun onBindViewHolder(holder: AthleteViewHolder, position: Int) {
         holder.athleteModel = _athletes[position]
 
+        if(_athletes[position].avatar == null){
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.avatar_default)
+                .into(holder.itemView.item_athlete_icon)
+        }
+
         Glide.with(holder.itemView.context)
             .load(holder.athleteModel!!.avatar)
             .into(holder.itemView.item_athlete_icon)

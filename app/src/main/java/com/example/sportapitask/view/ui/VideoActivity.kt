@@ -10,9 +10,7 @@ import com.example.sportapitask.data.models.domain.VideoModel
 import com.example.sportapitask.utils.MyConsts
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.Timeline
 import com.google.android.exoplayer2.source.ExtractorMediaSource
-import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.activity_video.*
@@ -29,6 +27,7 @@ class VideoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setFullScreen()
         setContentView(R.layout.activity_video)
         hideActionBar()
         getDataFromBundle()
@@ -39,6 +38,11 @@ class VideoActivity : AppCompatActivity() {
         if (intent.hasExtra(MyConsts.EXTRA_VIDEO_MODEL)) {
             video = intent.getSerializableExtra(MyConsts.EXTRA_VIDEO_MODEL) as VideoModel
         }
+    }
+
+    private fun setFullScreen(){
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     private fun hideActionBar(){

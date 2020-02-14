@@ -5,19 +5,18 @@ import androidx.room.Room
 import com.example.sportapitask.base.BaseApp
 import com.example.sportapitask.data.database.ApiaryDAO
 import com.example.sportapitask.data.database.ApiaryDatabase
-import com.example.sportapitask.data.models.NetworkFeedModel
-import com.example.sportapitask.data.models.domain.FeedModel
 import com.example.sportapitask.data.network.ApiaryDataSource
 import com.example.sportapitask.data.network.ApiaryDataSourceImpl
 import com.example.sportapitask.data.network.services.ApiaryService
 import com.example.sportapitask.data.repositories.ApiaryRepo
 import com.example.sportapitask.data.repositories.ApiaryRepoImpl
-import com.example.sportapitask.internal.ListMapper
-import com.example.sportapitask.internal.Mapper
+import com.example.sportapitask.internal.ConnectivityDetection
+import com.example.sportapitask.internal.ConnectivityDetectionImpl
 import com.example.sportapitask.utils.MyConsts
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -33,14 +32,26 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideApiaryService():ApiaryService{
+    fun provideApiaryService(interceptor:ConnectivityDetection):ApiaryService{
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+
         return Retrofit.Builder()
+            .client(okHttpClient)
             .baseUrl(MyConsts.APIARY_BASE_URL)
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiaryService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideConnectivityDetection(conDetectionImpl: ConnectivityDetectionImpl): ConnectivityDetection {
+        return conDetectionImpl
+    }
+
 
     @Singleton
     @Provides

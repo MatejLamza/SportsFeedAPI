@@ -3,10 +3,10 @@ package com.example.sportapitask.view.ui.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +21,7 @@ import com.example.sportapitask.view.ui.VideoActivity
 import com.example.sportapitask.viewmodels.FeedViewModel
 import com.example.sportapitask.viewmodels.factory.FeedVMFactory
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_feed.*
 import javax.inject.Inject
 
 class FragmentFeed : Fragment(), FeedAdapter.OnFeedClickListener {
@@ -28,7 +29,6 @@ class FragmentFeed : Fragment(), FeedAdapter.OnFeedClickListener {
     lateinit var factory: FeedVMFactory
 
     private var feed: ArrayList<FeedModel> = arrayListOf()
-
     private lateinit var feedVM: FeedViewModel
     private var adapter by AutoClearedValue<FeedAdapter>()
 
@@ -48,13 +48,29 @@ class FragmentFeed : Fragment(), FeedAdapter.OnFeedClickListener {
         feedVM = ViewModelProvider(this, factory).get(FeedViewModel::class.java)
         feedVM.getFeed()
 
+        feedVM.spinner.observe(viewLifecycleOwner, Observer { value ->
+            value.let { show ->
+                load_spinner.visibility = if (show) View.VISIBLE else View.GONE
+            }
+        })
+
+        feedVM.liveConnection.observe(viewLifecycleOwner, Observer {
+            if(!it){
+                Toast.makeText(context,MyConsts.CONNECTIVITY_MESSAGE,Toast.LENGTH_LONG).show()
+            }
+        })
+
         feedVM.liveFeed.observe(viewLifecycleOwner, Observer {
             feed = it as ArrayList<FeedModel>
             adapter.loadFeed(feed)
             adapter.notifyDataSetChanged()
         })
+
+
+
         return view
     }
+
 
     override fun onFeedClicked(feed: FeedModel) {
         val intent = Intent(activity?.applicationContext, VideoActivity::class.java)

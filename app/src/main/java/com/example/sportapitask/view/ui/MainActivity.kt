@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.sportapitask.R
 import com.example.sportapitask.view.ui.fragments.FragmentAthlete
 import com.example.sportapitask.view.ui.fragments.FragmentFeed
@@ -30,7 +31,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         handleMenuClicks()
-        goToFragment(fragmentFeed)
+    }
+
+    override fun onDestroy() {
+        supportFragmentManager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        super.onDestroy()
     }
 
     private fun handleMenuClicks(){

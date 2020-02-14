@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sportapitask.R
-import com.example.sportapitask.data.models.NetworkFeedModel
 import com.example.sportapitask.data.models.domain.FeedModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_feed.*
@@ -54,6 +53,8 @@ class FeedAdapter:RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
         set(value) {
             field = value
             tv_item_headline.text = feedModel!!.description
+            item_feed_views.text = feedModel!!.views
+            item_feed_sport.text = feedModel!!.athlete.sport?.name
         }
     }
 

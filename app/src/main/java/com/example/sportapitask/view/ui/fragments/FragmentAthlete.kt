@@ -2,10 +2,10 @@ package com.example.sportapitask.view.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sportapitask.R
 import com.example.sportapitask.data.models.domain.AthleteModel
 import com.example.sportapitask.internal.AutoClearedValue
+import com.example.sportapitask.utils.MyConsts
 import com.example.sportapitask.view.adapters.AthleteAdapter
 import com.example.sportapitask.viewmodels.AthleteViewModel
 import com.example.sportapitask.viewmodels.factory.AthleteVMFactory
@@ -25,9 +26,9 @@ class FragmentAthlete : Fragment() {
 
     @Inject
     lateinit var factory: AthleteVMFactory
+
     private var athletes: ArrayList<AthleteModel> = arrayListOf()
     private lateinit var athleteVM: AthleteViewModel
-
     //This will ensure that we dont have to call onDestroy and clean recycler view adapter
     private var adapter by AutoClearedValue<AthleteAdapter>()
 
@@ -46,6 +47,18 @@ class FragmentAthlete : Fragment() {
 
         athleteVM = ViewModelProvider(this, factory).get(AthleteViewModel::class.java)
         athleteVM.getAthlete()
+
+        athleteVM.spinner.observe(viewLifecycleOwner, Observer { value ->
+            value.let { show ->
+                progress_bar.visibility = if (show) View.VISIBLE else View.GONE
+            }
+        })
+
+        athleteVM.liveConnection.observe(viewLifecycleOwner, Observer {
+            if(!it){
+                Toast.makeText(context,MyConsts.CONNECTIVITY_MESSAGE,Toast.LENGTH_LONG).show()
+            }
+        })
 
         athleteVM.liveAthlete.observe(viewLifecycleOwner, Observer {
             athletes.add(it)

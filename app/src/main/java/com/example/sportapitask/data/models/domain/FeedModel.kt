@@ -11,7 +11,9 @@ const val CURRENT_FEED_ID = 0
 @Entity(tableName = "feed")
 data class FeedModel(
     var video:VideoModel,
-    var description:String
+    var description:String,
+    var views:String,
+    var athlete:AthleteModel
 ){
     @PrimaryKey(autoGenerate = false)
     var idFeed = CURRENT_FEED_ID

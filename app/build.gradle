@@ -15,6 +15,7 @@ project.ext {
     androidMaterial = "1.1.0"
     circularImageVersion = "3.2.0"
     roomVersion = "1.1.1"
+    exoPlayerVersion = "2.9.6"
 }
 
 android {
@@ -54,6 +55,7 @@ dependencies {
 
     implementation "com.google.android.material:material:$androidMaterial"
 
+
     //Recycler View
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
@@ -61,10 +63,7 @@ dependencies {
     implementation "com.mikhaellopez:circularimageview:$circularImageVersion"
 
     //Player
-    implementation 'com.github.rubensousa:previewseekbar-exoplayer:2.8.1.0'
-    implementation 'com.github.rubensousa:previewseekbar:2.0.0'
-
-    implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
+    implementation "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
 
     //ROOM
     implementation "android.arch.persistence.room:runtime:$roomVersion"
